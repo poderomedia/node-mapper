@@ -18,24 +18,30 @@
             </div>
         </header>
     	<div class="wrapper">        
-            <div class="input" ng-controller="projectCtrl">
-                <div class="label">Spreadsheet Upload</div>
-                <input
-                  type="text"
-                  ng-model="url"
-                  required="true">
-                </input>
-                <div class="button" ng-click="getData(url)">
-                    Load Data
-                </div>
-                <div>Data: {{data.Data.elements}}</div>
-                <div>Nodes: {{data.Nodes.elements}}</div>
-                <div>Edges: {{data.Edges.elements}}</div>
-                <network data="data">
-                    <div class="label">Network</div>
-                    <div id="viz" visualization data="data">
+            <div ng-controller="projectCtrl">
+                <div class="input">
+                    <div class="label">Spreadsheet</div>
+                    <input
+                      type="text"
+                      ng-model="url"
+                      required="true">
+                    </input>
+                    <div class="button" ng-click="getData(url)">
+                        Load Data
                     </div>
-                </network>
+                    <div class="data-preview" ng-if="data">
+                        <div>Data: {{data.Data.elements}}</div>
+                        <div>Nodes: {{data.Nodes.elements}}</div>
+                        <div>Edges: {{data.Edges.elements}}</div>
+                    </div>
+                </div>
+                <div class="network">
+                    <network data="data">
+                        <div class="label">Network</div>
+                        <div id="viz" visualization data="data">
+                        </div>
+                    </network>
+                </div>
             </div>
         </div>
         <script src="app.js"></script>

@@ -110,19 +110,24 @@ header {
     font-weight: bold;
 }
 
+div.wrapper {
+    div.label {
+        width: 100%;
+        text-align: center;
+        padding-top: 20px;
+        padding-bottom: 10px;
+    }
+}
+
 div.input {
     margin: 0 auto;
     margin-top: 20px;
     width: 600px;
-    div.label {
-        width: 100%;
-        text-align: center;
-        padding-bottom: 10px;
-    }
+
     input {
         float: left;
-         width: 490px;
-         height: 30px;
+        width: 490px;
+        height: 30px;
     }
     div.button {
         cursor: pointer;
@@ -135,5 +140,14 @@ div.input {
             background-color: black;
             color: white;
         }
+    }
+}
+
+div.network {
+    margin-top: 50px;
+
+    div#viz {
+        width: 100%;
+        height: 500px;
     }
 }

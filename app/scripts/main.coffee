@@ -1,7 +1,8 @@
 app = angular.module('app', [])
 
 angular.module('app').controller('projectCtrl', ['$scope', ($scope) ->
-    $scope.url = 'https://docs.google.com/spreadsheets/d/1nNgKW8EZ98SKOTMEj9wujsJIJfmlRuFUowwRtSbduuQ/pubhtml'
+    $scope.url = 'https://docs.google.com/spreadsheets/d/1ozfvHPGlDLIE2idxnj2iDg2H_ZLJYxtgwSgjCKGfnUw/pubhtml'
+    # $scope.url = 'https://docs.google.com/spreadsheets/d/1nNgKW8EZ98SKOTMEj9wujsJIJfmlRuFUowwRtSbduuQ/pubhtml'
     getSpreadsheetData = (key) ->
         Tabletop.init(
             key: key
@@ -13,8 +14,6 @@ angular.module('app').controller('projectCtrl', ['$scope', ($scope) ->
 
     $scope.getData = (url) ->
         console.log('Getting data for', url)
-
-        # TODO Use regex matching for this
         key = url.split('/')[5]
         getSpreadsheetData(key)
 ])
@@ -39,14 +38,24 @@ angular.module('app').directive("network", ["$window", "$timeout",
                     nodeData = data.Data.elements
                     nodes = data.Nodes.elements
                     edges = data.Edges.elements
+                    console.log(nodeData, nodes, edges)
 
                     network = d3plus.viz()
                         .type("network")
+                        .color("type of entity")
                         .container("#viz")
+                        .text("name")
+                        .font(
+                            size: 10
+                        )
                         .data(nodeData)
                         .nodes(nodes)
                         .edges(edges)
-                        .id("ID")
+                        .edges(
+                            label: "type"
+                        )
+                        .id("id")
+                        .tooltip(["type of entity"])
                         .draw()
 
         )

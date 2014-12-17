@@ -32,14 +32,18 @@
                             Load Data
                         </div>
                     </div>
-                    <div class="data-preview" ng-if="data">
+<!--                     <div class="data-preview" ng-if="data">
                         <div>Data: {{data.Data.elements}}</div>
                         <div>Nodes: {{data.Nodes.elements}}</div>
                         <div>Connections: {{data.Connections.elements}}</div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="config section">
                     <div class="title">2. Configure</div>
+<!--                     <div class="label">Node Color</div>
+                    <select ng-options="n for n in nodeAttributes" ng-model="selected"></section> -->
+                    <div class="label">Edge Label</div>
+                    <select ng-options="c for c in connectionAttributes" ng-model="selected"></section>
                 </div>
                 <div class="network section">
                     <network data="data">

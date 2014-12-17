@@ -123,6 +123,10 @@ header {
     margin: 0 auto;
     margin-top: 20px;
 
+    &:last-child {
+        margin-bottom: 20px;
+    }
+
     span.number {
         position: relative;
         left: -50px;

@@ -1,14 +1,18 @@
 app = angular.module('app', [])
 
 angular.module('app').controller('projectCtrl', ['$scope', ($scope) ->
-    $scope.url = 'https://docs.google.com/spreadsheets/d/1ozfvHPGlDLIE2idxnj2iDg2H_ZLJYxtgwSgjCKGfnUw/pubhtml'
-    # $scope.url = 'https://docs.google.com/spreadsheets/d/1nNgKW8EZ98SKOTMEj9wujsJIJfmlRuFUowwRtSbduuQ/pubhtml'
+    # $scope.url = 'https://docs.google.com/spreadsheets/d/13VWRA1Vjcn9bu55SCBIFCUoC0kXhlhNrclK67O7ItcM/pubhtml'
+    # $scope.url = 'https://docs.google.com/spreadsheets/d/1ozfvHPGlDLIE2idxnj2iDg2H_ZLJYxtgwSgjCKGfnUw/pubhtml'
+    $scope.url = 'https://docs.google.com/spreadsheets/d/1nNgKW8EZ98SKOTMEj9wujsJIJfmlRuFUowwRtSbduuQ/pubhtml'
     getSpreadsheetData = (key) ->
+        console.log("Key:", key)
         Tabletop.init(
             key: key
             callback: (data, tabletop) ->
                 $scope.data = data
-                console.log("Data:", data)
+                console.log(data.Connections)
+                $scope.nodeAttributes = data.Data.column_names.slice(1, data.Data.column_names.length)
+                $scope.connectionAttributes = data.Connections.column_names.slice(2, data.Connections.column_names.length)
                 $scope.$apply()
         )
 

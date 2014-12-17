@@ -5,6 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Node Mapper</title>
 
+        <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,400italic,300italic,300,600,600italic' rel='stylesheet' type='text/css'>
         <script src="lib/angular.min.js"></script>    
         <script src="lib/tabletop.js"></script>  
         <script src="lib/d3.js"></script>  
@@ -19,25 +20,37 @@
         </header>
     	<div class="wrapper">        
             <div ng-controller="projectCtrl">
-                <div class="input">
-                    <div class="label">Spreadsheet</div>
-                    <input
-                      type="text"
-                      ng-model="url"
-                      required="true">
-                    </input>
-                    <div class="button" ng-click="getData(url)">
-                        Load Data
+                <div class="input section">
+                    <div class="title">1. Upload a Google Spreadsheet</div>
+                    <div class="input-container">
+                        <input
+                        type="text"
+                        ng-model="url"
+                        required="true">
+                        </input>
+                        <div class="button" ng-click="getData(url)">
+                            Load Data
+                        </div>
                     </div>
                     <div class="data-preview" ng-if="data">
                         <div>Data: {{data.Data.elements}}</div>
                         <div>Nodes: {{data.Nodes.elements}}</div>
-                        <div>Edges: {{data.Edges.elements}}</div>
+                        <div>Connections: {{data.Connections.elements}}</div>
                     </div>
                 </div>
-                <div class="network">
+                <div class="config section">
+                    <div class="title">2. Configure</div>
+                </div>
+                <div class="network section">
                     <network data="data">
-                        <div class="label">Network</div>
+                        <div class="title">3. Visualize Your Network</div>
+                        <div id="viz" visualization data="data">
+                        </div>
+                    </network>
+                </div>
+                <div class="export section">
+                    <network data="data">
+                        <div class="title">4. Export or Embed</div>
                         <div id="viz" visualization data="data">
                         </div>
                     </network>

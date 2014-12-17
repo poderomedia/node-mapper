@@ -1,6 +1,7 @@
 gulp = require 'gulp'
 gutil = require 'gulp-util'
 
+browserSync = require 'browser-sync'
 sass = require 'gulp-sass'
 rename = require 'gulp-rename'
 coffeelint = require 'gulp-coffeelint'
@@ -35,26 +36,22 @@ destinations =
 
 # TASKS -------------------------------------------------------------
 
-express = require('express')
-refresh = require('gulp-livereload')
-livereload = require('connect-livereload')
-
-LIVERELOADPORT = 35729
-SERVERPORT = 9000
-
-server = express()
-server.use(livereload(port: LIVERELOADPORT))
-server.use(express.static('./dist'))
-server.all('/*', (req, res) -> res.sendFile('index.html', root: 'dist' ))
+gulp.task('browser-sync', ->
+  browserSync(
+    server:
+      baseDir: 'dist/'
+  )
+)
 
 # Compile and concatenate scripts
 gulp.task('coffee', ->
   gulp.src(sources.coffee)
-    .pipe(coffee({bare: true})
+    .pipe(coffee(bare: true)
     .on('error', gutil.log))
     .pipe(concat('app.js'))
     .pipe(if isProd then uglify() else gutil.noop())
     .pipe(gulp.dest(destinations.js))
+    .pipe(browserSync.reload(stream: true))
 )
 
 # Compile stylesheets
@@ -63,6 +60,7 @@ gulp.task('sass', ->
     .pipe(sass(onError: (e) -> console.log(e)))
     .pipe(autoprefixer('last 2 versions', '> 1%', 'ie 8'))
     .pipe(gulp.dest(destinations.css))
+    .pipe(browserSync.reload(stream: true))
 )
 
 # Lint coffeescript
@@ -95,9 +93,6 @@ gulp.task('libcss', ->
 
 # Watched tasks
 gulp.task('watch', ->
-  server.listen(SERVERPORT)
-  refresh.listen(LIVERELOADPORT)
-
   gulp.watch sources.data, ['data']
   gulp.watch 'app/styles/*.scss', ['sass']
   gulp.watch sources.assets, ['assets']
@@ -106,7 +101,7 @@ gulp.task('watch', ->
   gulp.watch sources.libjs, ['libjs']
   # gulp.watch sources.libcss, ['libcss']
 
-  gulp.watch('./dist/**').on('change', refresh.changed);
+  gulp.watch('./dist/**').on('change', browserSync.reload);
  )
 
 # Remove /dist directory
@@ -121,6 +116,7 @@ gulp.task('build', ->
 )
 
 gulp.task('default', [
+  'browser-sync'
   'build'
   'watch'
 ])

@@ -8,7 +8,7 @@ angular.module('app').controller('projectCtrl', ['$scope', ($scope) ->
             key: key
             callback: (data, tabletop) ->
                 $scope.data = data
-                console.log(data)
+                console.log("Data:", data)
                 $scope.$apply()
         )
 
@@ -37,7 +37,7 @@ angular.module('app').directive("network", ["$window", "$timeout",
                     unless data then return
                     nodeData = data.Data.elements
                     nodes = data.Nodes.elements
-                    edges = data.Edges.elements
+                    edges = data.Connections.elements
                     console.log(nodeData, nodes, edges)
 
                     network = d3plus.viz()

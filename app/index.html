@@ -40,10 +40,32 @@
                 </div>
                 <div class="config section">
                     <div class="title">2. Configure</div>
-<!--                     <div class="label">Node Color</div>
-                    <select ng-options="n for n in nodeAttributes" ng-model="selected"></section> -->
-                    <div class="label">Edge Label</div>
-                    <select ng-options="c for c in connectionAttributes" ng-model="selected"></section>
+                    <ul>
+                        <li>
+                            <div class="label">Node Label</div>
+                            <select ng-options="n for n in nodeAttributes" ng-model="selected"></section>
+                        </li>
+                        <li>
+                            <div class="label">Node Color</div>
+                            <select ng-options="n for n in nodeAttributes" ng-model="selected"></section>
+                        </li>
+                        <li>
+                            <div class="label">Node Size</div>
+                            <select ng-options="n for n in nodeAttributes" ng-model="selected"></section>
+                        </li>
+                        <li>
+                            <div class="label">Edge Label</div>
+                            <select ng-options="c for c in connectionAttributes" ng-model="selected"></section>
+                        </li>
+                        <li>
+                            <div class="label">Edge Thickness</div>
+                            <select ng-options="c for c in connectionAttributes" ng-model="selected"></section>
+                        </li>
+                        <li>
+                            <div class="label">Edge Opacity</div>
+                            <select ng-options="c for c in connectionAttributes" ng-model="selected"></section>
+                        </li>
+                    </ul>
                 </div>
                 <div class="network section">
                     <network data="data">

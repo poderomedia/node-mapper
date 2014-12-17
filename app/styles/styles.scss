@@ -1,0 +1,139 @@
+// Universal List Styling
+ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    li {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+    }
+}
+
+@mixin no-select {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+
+@mixin text-select {
+    -webkit-touch-callout: text;
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+    cursor: default;
+}
+
+@mixin transition($property, $duration, $timing-function) {
+    -webkit-transition: $property $duration $timing-function;
+    -moz-transition: $property $duration $timing-function;
+    -o-transition: $property $duration $timing-function;
+    transition: $property $duration $timing-function;
+}
+
+@mixin opacity-transition { @include transition(opacity, 0.1s, ease-in) }
+@mixin border-transition { @include transition(border, 0.1s, ease-in) }
+@mixin color-transition { @include transition(color, 0.1s, ease-in) }
+@mixin background-transition { @include transition(background, 0.1s, ease-in) }
+
+@mixin nudge {
+    cursor: pointer;
+    position: relative;
+    &:hover { bottom: 1px; }
+}
+
+@font-face {
+    font-family: 'Neutral';
+    font-style: normal;
+    font-weight: bold;
+    src: url('assets/fonts/neutral-bold-3.eot') format('eot'), url('assets/fonts/neutral-bold-3.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Neutral';
+    font-style: normal;
+    font-weight: 500;
+    src: url('assets/fonts/neutral-medium-3.eot') format('eot'), url('assets/fonts/neutral-medium-3.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Neutral';
+    font-style: normal;
+    font-weight: 300;
+    src: url('assets/fonts/neutral-regular-3.eot') format('eot'), url('assets/fonts/neutral-regular-3.woff') format('woff');
+}
+
+// Universal Link Styling
+a {
+    text-decoration: none !important;
+    color: black;
+    border-bottom: 1px solid black;
+
+    &.no-border {
+        border-bottom: none;
+    }
+}
+
+*, *:before, *:after {
+    -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
+
+.wrapper {
+    min-height: 100%;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+
+    color: black;
+    font-size: 16px;
+    font-family: 'Helvetica', Arial, Sans Serif;
+    font-weight: 300;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    background-size: cover;
+    background: white;
+}
+
+header {
+    margin-top: 10px;
+    margin-left: 10px;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+div.input {
+    margin: 0 auto;
+    margin-top: 20px;
+    width: 600px;
+    div.label {
+        width: 100%;
+        text-align: center;
+        padding-bottom: 10px;
+    }
+    input {
+        float: left;
+         width: 490px;
+         height: 30px;
+    }
+    div.button {
+        cursor: pointer;
+        float: right;
+        border: 1px solid black;
+        width: 100px;
+        padding: 5px 10px;
+
+        &:hover {
+            background-color: black;
+            color: white;
+        }
+    }
+}

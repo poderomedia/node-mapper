@@ -1,8 +1,6 @@
 app = angular.module('app', [])
 
 angular.module('app').controller('projectCtrl', ['$scope', ($scope) ->
-    # $scope.url = 'https://docs.google.com/spreadsheets/d/13VWRA1Vjcn9bu55SCBIFCUoC0kXhlhNrclK67O7ItcM/pubhtml'
-    # $scope.url = 'https://docs.google.com/spreadsheets/d/1ozfvHPGlDLIE2idxnj2iDg2H_ZLJYxtgwSgjCKGfnUw/pubhtml'
     $scope.url = 'https://docs.google.com/spreadsheets/d/1nNgKW8EZ98SKOTMEj9wujsJIJfmlRuFUowwRtSbduuQ/pubhtml'
     getSpreadsheetData = (key) ->
         console.log("Key:", key)
@@ -41,26 +39,28 @@ angular.module('app').directive("network", ["$window", "$timeout",
                     unless data then return
                     nodeData = data.Data.elements
                     nodes = data.Nodes.elements
-                    edges = data.Connections.elements
-                    console.log(nodeData, nodes, edges)
+                    edges = data.Connections.elements.map (e) ->
+                                source: (nodes.findIndex (n) -> n.id == e.source)
+                                target: (nodes.findIndex (n) -> n.id == e.target)
 
-                    network = d3plus.viz()
-                        .type("network")
-                        .color("type of entity")
-                        .container("#viz")
-                        .text("name")
-                        .font(
-                            size: 10
-                        )
-                        .data(nodeData)
-                        .nodes(nodes)
-                        .edges(edges)
-                        .edges(
-                            label: "type"
-                        )
-                        .id("id")
-                        .tooltip(["type of entity"])
-                        .draw()
+                    container = document.getElementById('viz')
 
+                    svg = d3.select("viz").append("svg")
+                            .attr("width", container.scrollWidth)
+                            .attr("height", container.scrollHeight);
+
+                    d3cola = cola.d3adaptor()
+                        .linkDistance(120)
+                        .avoidOverlaps(true)
+                        .size([container.scrollWidth, container.scrollHeight])
+
+                    d3cola.nodes(nodes)
+                          .links(links)
+                          .start(10,10,10)
+
+                    link = svg.selectAll(".link")
+                              .data(graph.links)
+                              .enter().append("line")
+                              .attr("class", "link")
         )
 ])

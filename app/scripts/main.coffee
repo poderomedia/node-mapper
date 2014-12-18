@@ -10,7 +10,6 @@ angular.module('app').controller('projectCtrl', ['$scope', ($scope) ->
             key: key
             callback: (data, tabletop) ->
                 $scope.data = data
-                console.log(data.Connections)
                 $scope.nodeAttributes = data.Data.column_names.slice(1, data.Data.column_names.length)
                 $scope.connectionAttributes = data.Connections.column_names.slice(2, data.Connections.column_names.length)
                 $scope.$apply()
@@ -20,6 +19,14 @@ angular.module('app').controller('projectCtrl', ['$scope', ($scope) ->
         console.log('Getting data for', url)
         key = url.split('/')[5]
         getSpreadsheetData(key)
+
+    $scope.config =
+        sNodeLabel: ''
+        sNodeColor: ''
+        sNodeSize: ''
+        sEdgeLabel: ''
+        sEdgeThickness: ''
+        sEdgeOpacity: ''
 ])
 
 angular.module('app').directive("network", ["$window", "$timeout",
@@ -28,18 +35,29 @@ angular.module('app').directive("network", ["$window", "$timeout",
             restrict: "EA"
             scope:
                 data: "="
+                config: "="
             link: (scope, ele, attrs) ->
-                x = 'test'
+                scope.$watch(( -> angular.element($window)[0].innerWidth ), ( -> scope.render(scope.data, scope.config)))
 
-                scope.$watch(( -> angular.element($window)[0].innerWidth ), ( -> scope.render(scope.data)))
+                scope.$watch('data', (data) ->
+                    scope.render(data, scope.config)
+                , false)
 
-                scope.$watchCollection("[data]", ((newData) ->
-                        scope.render(newData[0])
-                  ), true)
+                # http://tech.small-improvements.com/2014/06/11/deep-watching-circular-data-structures-in-angular/
+                # watchData = -> scope.data.value
+                # watchConfig = -> scope.config.value
 
-                scope.render = (data) ->
+                scope.$watch('config', (config) ->
+                    scope.render(scope.data, config)
+                , true)
+
+                scope.render = (data, config) ->
                     unless data then return
                     cdata = _.clone(data, true);
+                    console.log("Config:", config)
+                    nodeData = data.Data.elements
+                    nodes = data.Nodes.elements
+                    edges = data.Connections.elements
 
                     nodes = cdata.Data.elements;
                     nodes.forEach((n) -> n.x = 100; n.y = 50)

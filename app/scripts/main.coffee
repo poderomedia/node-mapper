@@ -1,6 +1,8 @@
 app = angular.module('app', [])
 
 angular.module('app').controller('projectCtrl', ['$scope', ($scope) ->
+    #
+    #$scope.url = 'https://docs.google.com/spreadsheets/d/1opf9b1lHbAcFpX-G0j8F-b4kYHdzn8n6VPnY5kz2N3w/pubhtml'
     $scope.url = 'https://docs.google.com/spreadsheets/d/1nNgKW8EZ98SKOTMEj9wujsJIJfmlRuFUowwRtSbduuQ/pubhtml'
     getSpreadsheetData = (key) ->
         console.log("Key:", key)
@@ -32,35 +34,82 @@ angular.module('app').directive("network", ["$window", "$timeout",
                 scope.$watch(( -> angular.element($window)[0].innerWidth ), ( -> scope.render(scope.data)))
 
                 scope.$watchCollection("[data]", ((newData) ->
-                  scope.render(newData[0])
+                        scope.render(newData[0])
                   ), true)
 
                 scope.render = (data) ->
                     unless data then return
-                    nodeData = data.Data.elements
-                    nodes = data.Nodes.elements
-                    edges = data.Connections.elements.map (e) ->
+                    cdata = _.clone(data, true);
+
+                    nodes = cdata.Data.elements;
+                    nodes.forEach((n) -> n.x = 100; n.y = 50)
+
+                    edges = cdata.Connections.elements.map (e) ->
                                 source: (nodes.findIndex (n) -> n.id == e.source)
                                 target: (nodes.findIndex (n) -> n.id == e.target)
 
+                    color = d3.scale.category20()
+                                    .domain(_.uniq(edges.map((e) -> e['type of entity'])))
+
                     container = document.getElementById('viz')
 
-                    svg = d3.select("viz").append("svg")
+                    svg = d3.select("#viz").append("svg")
                             .attr("width", container.scrollWidth)
-                            .attr("height", container.scrollHeight);
+                            .attr("height", container.scrollHeight)
+
+                    constraints = _.pairs(_.groupBy(nodes,
+                                            (n) -> n['type of entity']))
+                                  .map((p, i) ->
+                                          type: 'alignment'
+                                          axis: 'y'
+                                          offsets: p[1].map((n) ->
+                                                     node: String(nodes.findIndex (m) -> m.id == n.id)
+                                                     offset: String(i)
+                                                  )
+                                        )
 
                     d3cola = cola.d3adaptor()
-                        .linkDistance(120)
-                        .avoidOverlaps(true)
-                        .size([container.scrollWidth, container.scrollHeight])
+                           .size([container.scrollWidth,
+                                 container.scrollHeight])
+                           .nodes(nodes)
+                           .links(edges)
+                           .symmetricDiffLinkLengths(50)
+                           .constraints(constraints)
+                           .start(100)
 
-                    d3cola.nodes(nodes)
-                          .links(links)
-                          .start(10,10,10)
 
                     link = svg.selectAll(".link")
-                              .data(graph.links)
-                              .enter().append("line")
+                              .data(edges)
+                              .enter()
+                              .append("line")
                               .attr("class", "link")
+                              .attr('stroke-width', 2)
+
+                    node = svg.selectAll(".node")
+                              .data(nodes)
+                              .enter().append("rect")
+                              .attr("class", "node")
+                              .attr('width', 50)
+                              .attr('height', 50)
+                              .attr('rx', 5)
+                              .attr('ry', 5)
+                              .style("fill", (d) -> color(d['type of entity']) )
+                              .on("click", (d) -> d.fixed = true)
+                              .call(d3cola.drag)
+
+                    node.append("title")
+                        .text((d) -> d.name + ' (' + d['type of entity'] + ')')
+
+                    d3cola.on('tick', ->
+                            link.attr('x1', (d) -> d.source.x)
+                                .attr('y1', (d) -> d.source.y)
+                                .attr('x2', (d) -> d.target.x)
+                                .attr('y2', (d) -> d.target.y)
+
+                            # node.attr('cx', (d) -> d.x)
+                            #     .attr('cy', (d) -> d.y)
+                            node.attr('x', (d) -> d.x - 50 / 2)
+                                .attr('y', (d) -> d.y - 50 / 2)
+                            )
         )
 ])

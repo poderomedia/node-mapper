@@ -54,7 +54,7 @@ angular.module('app').directive("network", ["$window", "$timeout",
                 scope.render = (data, config) ->
                     unless data then return
                     cdata = _.clone(data, true);
-                    console.log("Config:", config)
+
                     nodeData = data.Data.elements
                     nodes = data.Nodes.elements
                     edges = data.Connections.elements
@@ -75,23 +75,54 @@ angular.module('app').directive("network", ["$window", "$timeout",
                             .attr("width", container.scrollWidth)
                             .attr("height", container.scrollHeight)
 
+
+                    # create vertical alignment constraints for each group
+                    # (type of entity)
                     constraints = _.pairs(_.groupBy(nodes,
                                             (n) -> n['type of entity']))
                                   .map((p, i) ->
                                           type: 'alignment'
-                                          axis: 'y'
+                                          axis: 'x'
                                           offsets: p[1].map((n) ->
-                                                     node: String(nodes.findIndex (m) -> m.id == n.id)
-                                                     offset: String(i)
+                                                     node: nodes.findIndex (m) -> m.id == n.id
+                                                     offset: i
                                                   )
                                         )
+
+                    # create vertical separation constraints between first nodes of
+                    # each group (keeps groups separate)
+                    sepConstraints = _.initial(_.zip(constraints, constraints.slice(1)))
+                                      .map((p) ->
+                                         type: 'separation'
+                                         axis: 'x'
+                                         left: p[0].offsets[0].node,
+                                         right: p[1].offsets[1].node,
+                                         gap: 130,
+                                         equality: true
+                                     )
+
+                    # create horizontal separation constraints between nodes
+                    # of each group (keeps members of groups evenly distributed)
+                    distConstraints = _.flatten(constraints.map((c) ->
+                        _.initial(_.zip(c.offsets, c.offsets.slice(1))).map((p) ->
+                             type: 'separation'
+                             axis: 'y'
+                             left: p[0].node
+                             right: p[1].node
+                             gap: 70
+                             equality: true
+                        )))
+
+                    constraints = constraints.concat distConstraints
+                    constraints = constraints.concat sepConstraints
 
                     d3cola = cola.d3adaptor()
                            .size([container.scrollWidth,
                                  container.scrollHeight])
                            .nodes(nodes)
                            .links(edges)
-                           .symmetricDiffLinkLengths(50)
+#                           .symmetricDiffLinkLengths(25)
+#                           .jaccardLinkLengths(100)
                            .constraints(constraints)
                            .start(100)
 
@@ -109,10 +140,10 @@ angular.module('app').directive("network", ["$window", "$timeout",
                               .attr("class", "node")
                               .attr('width', 50)
                               .attr('height', 50)
-                              .attr('rx', 5)
-                              .attr('ry', 5)
+                              .attr('rx', 25)
+                              .attr('ry', 25)
                               .style("fill", (d) -> color(d['type of entity']) )
-                              .on("click", (d) -> d.fixed = true)
+#                              .on("click", (d) -> d.fixed = true)
                               .call(d3cola.drag)
 
                     node.append("title")

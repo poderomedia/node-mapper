@@ -20,16 +20,20 @@
         </header>
     	<div class="wrapper">        
             <div ng-controller="projectCtrl">
-                <div class="input section">
+                <div class="input section" ng-class="{'active': (stage >= 0)}">
                     <div class="title">1. Upload a Google Spreadsheet</div>
                     <div class="input-container">
                         <input
                         type="text"
                         ng-model="url"
-                        required="true">
+                        required="true"
+                        select-on-click>
                         </input>
                         <div class="button" ng-click="getData(url)">
-                            Load Data
+                            <div class="text" ng-if="!loading">
+                                Load Data
+                            </div>
+                            <div class="spinner" ng-if="loading"></div>
                         </div>
                     </div>
 <!--                     <div class="data-preview" ng-if="data">
@@ -38,9 +42,9 @@
                         <div>Connections: {{data.Connections.elements}}</div>
                     </div> -->
                 </div>
-                <div class="config section">
+                <div class="config section" ng-class="{'active': (stage >= 1)}">
                     <div class="title">2. Configure</div>
-                    {{config}}
+                    <div class="row-label">Node Properties</div>
                     <ul>
                         <li>
                             <div class="label">Node Label</div>
@@ -54,6 +58,9 @@
                             <div class="label">Node Size</div>
                             <select ng-options="n for n in nodeAttributes" ng-model="config.sNodeSize"></select>
                         </li>
+                    </ul>
+                    <div class="row-label">Edge Properties</div>
+                    <ul>
                         <li>
                             <div class="label">Edge Label</div>
                             <select ng-options="c for c in connectionAttributes" ng-model="config.sEdgeLabel"></select>
@@ -67,17 +74,53 @@
                             <select ng-options="c for c in connectionAttributes" ng-model="config.sEdgeOpacity"></select>
                         </li>
                     </ul>
+                    <div class="row-label">General Properties</div>
+                    <ul>
+                        <li>
+                            <div class="label">Width</div>
+                            <input
+                                type="text"
+                                ng-model="config.width"
+                                required="true"
+                            >
+                            </input>
+                        </li>
+                        <li>
+                            <div class="label">Height</div>
+                            <input
+                                type="text"
+                                ng-model="config.height"
+                                required="true"
+                            >
+                            </input>
+                        </li>
+                        <li>
+                            <div class="label">Font Size</div>
+                            <select ng-options="s for s in fontSizes" ng-model="config.sFontSize"></select>
+                        </li>
+                    </ul>
                 </div>
-                <div class="network section">
+                <div class="network section" ng-class="{'active': (stage >= 1)}">
                     <network data="data" config="config">
-                        <div class="title">3. Visualize Your Network</div>
-                        <div id="viz">
+                        <div class="title">3. Visualize Network</div>
+                        <div class="full-viz">
+                            <div id="viz">
+                            </div>
+                            <div class="logo">
+                                <a href="/" target="_blank">
+                                    Node Mapper
+                                </a>
+                            </div>
                         </div>
                     </network>
                 </div>
-                <div class="export section">
+                <div class="export section" ng-class="{'active': (stage >= 1)}">
                     <div class="title">4. Export or embed</div>
-                </div>
+                        <div class="label">URL</div>
+                        <input ng-model="embedURL" select-on-click></input>
+                        <div class="label">HTML</div>
+                        <input ng-model="embedHTML" select-on-click></input>
+                    </div>
             </div>
         </div>
         <script src="app.js"></script>

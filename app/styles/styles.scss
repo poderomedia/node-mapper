@@ -1,3 +1,6 @@
+$light-gray: #e0e5e9;
+$dark-gray: #555555;
+
 // Universal List Styling
 ul {
     margin: 0;
@@ -8,6 +11,14 @@ ul {
         padding: 0;
         list-style-type: none;
     }
+}
+
+@mixin small-caps {
+    font-family: "Titillium Web", "Lato", helvetica, sans-serif;
+    font-size: 10px;
+    letter-spacing: 1px;
+    line-height: 35px;
+    text-transform: uppercase;
 }
 
 @mixin no-select {
@@ -69,11 +80,15 @@ ul {
     src: url('assets/fonts/neutral-regular-3.eot') format('eot'), url('assets/fonts/neutral-regular-3.woff') format('woff');
 }
 
+select {
+    font-family: "Titillium Web","Lucida Grande","Lucida Sans",sans-serif;
+}
+
 // Universal Link Styling
 a {
     text-decoration: none !important;
     color: black;
-    border-bottom: 1px solid black;
+    // border-bottom: 1px solid black;
 
     &.no-border {
         border-bottom: none;
@@ -105,26 +120,32 @@ html, body {
 }
 
 header {
+    position: fixed;
+    width: 100%;
     padding: 20px 0;
     font-size: 30px;
     font-weight: bold;
     text-align: center;
     background-color: #1b2032;
     color: white;
+    z-index: 10;
 }
 
 .section {
+    @include opacity-transition;
     background-color: white;
-    -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.75);
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.75);
-    min-height: 200px;
+    position: relative;
+    // -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.75);
+    // -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.75);
+    // box-shadow: 0 1px 5px rgba(0, 0, 0, 0.75);
+    border: 1px solid black;
+    min-height: 150px;
     max-width: 700px;
-    margin: 0 auto;
-    margin-top: 20px;
+    margin: 0 auto 10px auto;
 
-    &:last-child {
-        margin-bottom: 20px;
+    opacity: 0.3;
+    &.active {
+        opacity: 1.0;
     }
 
     span.number {
@@ -134,9 +155,69 @@ header {
         float: left;
         display: inline;
     }
+
+    div.row-label {
+        @include small-caps;
+        height: 20px;
+        text-align: center;
+        padding-top: 20px;
+        padding-bottom: 30px;
+        border-bottom: 1px solid $light-gray;
+    }
+    ul {
+        width: 100%;
+        display: block;
+        overflow-x: auto;
+        li {
+            width: 30%;
+            margin-left: 2.5%;
+            float: left;
+            div.label {
+                @include small-caps;
+                text-align: center;
+            }
+            select {
+                width: 100%;
+            }
+        }
+    }
 }
 
+@keyframes spinner {
+    to {transform: rotate(360deg);}
+}
+ 
+@-webkit-keyframes spinner {
+    to {-webkit-transform: rotate(360deg);}
+}
+ 
+.spinner {
+    min-width: 24px;
+    min-height: 24px;
+}
+ 
+.spinner:before {
+    content: 'Loading…';
+    position: absolute;
+    // top: 50%;
+    // left: 50%;
+    width: 16px;
+    height: 16px;
+    margin-top: 4px;
+    margin-left: -7px;
+}
+ 
+.spinner:not(:required):before {
+    content: '';
+    border-radius: 50%;
+    border: 2px solid rgba(0, 0, 0, .3);
+    border-top-color: rgba(0, 0, 0, .6);
+    animation: spinner .6s linear infinite;
+    -webkit-animation: spinner .6s linear infinite;
+}
 div.wrapper {
+    padding-top: 250px;
+    padding-bottom: 250px;
     div.title {
         text-align: center;
         width: 100%;
@@ -159,20 +240,37 @@ div.input-container {
         text-align: center;
         cursor: pointer;
         float: right;
-        border: 1px solid black;
+        // border: 1px solid $light-gray;
         width: 100px;
         padding: 5px 10px;
 
         &:hover {
-            background-color: black;
-            color: white;
+            background-color: $light-gray;
         }
+
+        &:active {
+            background-color: $dark-gray;
+        }
+
+        // &:hover {
+        //     background-color: black;
+        //     color: white;
+        // }
     }
 }
 
 div.network {
+    min-width: 600px;
+    &.max-width {
+        max-width: 95%;
+    }
     div#viz {
         width: 100%;
         height: 500px;
     }
-}
+    div.logo {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+    }
+}        

@@ -99,9 +99,6 @@ gulp.task('watch', ->
   gulp.watch sources.html, ['html']
   gulp.watch sources.coffee, ['coffee', 'lint']
   gulp.watch sources.libjs, ['libjs']
-  # gulp.watch sources.libcss, ['libcss']
-
-  gulp.watch('./dist/**').on('change', browserSync.reload);
  )
 
 # Remove /dist directory

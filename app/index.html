@@ -6,11 +6,8 @@
         <title>Node Mapper</title>
 
         <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,400italic,300italic,300,600,600italic' rel='stylesheet' type='text/css'>
-        <script src="lib/angular.min.js"></script>    
-        <script src="lib/tabletop.js"></script>  
-        <script src="lib/d3.js"></script>  
-        <script src="lib/d3plus.full.min.js"></script>     
         <link rel="stylesheet" href="styles.css">
+        <script src="app.js" type="text/javascript"></script>
     </haed>
     <body>
         <header>
@@ -21,7 +18,8 @@
     	<div class="wrapper">        
             <div ng-controller="projectCtrl">
                 <div class="input section" ng-class="{'active': (stage >= 0)}">
-                    <div class="title">1. Upload a Google Spreadsheet</div>
+                    <div class="step">1</div>
+                    <div class="title">Upload a Google Spreadsheet</div>
                     <div class="input-container">
                         <input
                         type="text"
@@ -43,7 +41,8 @@
                     </div> -->
                 </div>
                 <div class="config section" ng-class="{'active': (stage >= 1)}">
-                    <div class="title">2. Configure</div>
+                    <div class="step">2</div>
+                    <div class="title">Configure</div>
                     <div class="row-label">Node Properties</div>
                     <ul>
                         <li>
@@ -101,8 +100,9 @@
                     </ul>
                 </div>
                 <div class="network section" ng-class="{'active': (stage >= 1)}">
+                    <div class="step">3</div>
                     <network data="data" config="config">
-                        <div class="title">3. Visualize Network</div>
+                        <div class="title">Visualize Network</div>
                         <div class="full-viz">
                             <div id="viz">
                             </div>
@@ -113,13 +113,20 @@
                             </div>
                         </div>
                     </network>
+                    <div class="button" ng-click="getData(url)">
+                        <div class="text" ng-if="!saving">
+                            Save
+                        </div>
+                        <div class="spinner" ng-if="saving"></div>
+                    </div>
                 </div>
                 <div class="export section" ng-class="{'active': (stage >= 1)}">
-                    <div class="title">4. Export or embed</div>
+                    <div class="step">4</div>
+                    <div class="title">Export or embed</div>
                         <div class="label">URL</div>
-                        <input ng-model="embedURL" select-on-click></input>
+                        <input type="text" ng-model="embedURL" select-on-click></input>
                         <div class="label">HTML</div>
-                        <input ng-model="embedHTML" select-on-click></input>
+                        <input type="text" ng-model="embedHTML" select-on-click></input>
                     </div>
             </div>
         </div>

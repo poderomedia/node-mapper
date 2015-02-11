@@ -1,9 +1,28 @@
-app = angular.module('app', [])
+angular = require('angular')
+d3 = require('d3')
+d3plus = require('d3plus')
+tabletop = require('tabletop')
 
-angular.module('app').controller('projectCtrl', ['$scope', ($scope) ->
+# Top-level
+require('./routes')
+require('./data_services')
+
+angular.module('app', [ 'app.routes', 'app.services' ])
+    .constant('API_URL', 'http://localhost:9000')
+
+
+angular.module('app').controller('embedCtrl', ($scope, $stateParams) ->
+    console.log("key", $stateParams.key)    
+)
+
+
+
+angular.module('app').controller('projectCtrl', ($scope, $location, DataService) ->
     # $scope.url = 'https://docs.google.com/spreadsheets/d/13VWRA1Vjcn9bu55SCBIFCUoC0kXhlhNrclK67O7ItcM/pubhtml'
     # $scope.url = 'https://docs.google.com/spreadsheets/d/1ozfvHPGlDLIE2idxnj2iDg2H_ZLJYxtgwSgjCKGfnUw/pubhtml'
     $scope.url = 'https://docs.google.com/spreadsheets/d/1nNgKW8EZ98SKOTMEj9wujsJIJfmlRuFUowwRtSbduuQ/pubhtml'
+    $scope.key = ''
+
     getSpreadsheetData = (key) ->
         $scope.loading = true
         console.log("Key:", key)
@@ -21,15 +40,19 @@ angular.module('app').controller('projectCtrl', ['$scope', ($scope) ->
 
                 $scope.config.sEdgeLabel = $scope.connectionAttributes[0]
 
-                console.log("CONFIG IN CALLBACK", $scope.config)
-
                 $scope.stage = $scope.stage + 1
+
                 $scope.$apply()
+
+                DataService.promise(key, $scope.data.Data, $scope.data.Nodes, $scope.data.Connections, (result) ->
+                    console.log("DataService result", result)
+                )
         )
 
     $scope.getData = (url) ->
         console.log('Getting data for', url)
         key = url.split('/')[5]
+        $scope.key = key
         getSpreadsheetData(key)
 
     $scope.fontSizes = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
@@ -47,9 +70,12 @@ angular.module('app').controller('projectCtrl', ['$scope', ($scope) ->
 
     $scope.stage = 0
 
-    # $scope.embedURL = $location.absUrl().split('//')[1].split('/')[0] + '/#' + '/test' # $state.href('embed', {pID: $rootScope.pID, sID: sID})
-    # $scope.embedHTML = '<iframe width="560" height="315" src="' + $scope.embedURL + '" frameborder="0" allowfullscreen></iframe>'
-])
+    $scope.embedURL = $location.absUrl().split('//')[1].split('/')[0] + '/#' + '/embed/' + $scope.key # $state.href('embed', {pID: $rootScope.pID, sID: sID})
+    $scope.embedHTML = '<iframe width="560" height="315" src="' + $scope.embedURL + '" frameborder="0" allowfullscreen></iframe>'
+)
+
+
+
 
 angular.module('app').directive("network", ["$window", "$timeout",
     ($window, $timeout) ->

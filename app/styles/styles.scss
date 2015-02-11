@@ -138,14 +138,23 @@ header {
     // -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.75);
     // -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.75);
     // box-shadow: 0 1px 5px rgba(0, 0, 0, 0.75);
-    border: 1px solid black;
+    border: 1px solid $dark-gray;
+    border-radius: 2px;
     min-height: 150px;
     max-width: 700px;
     margin: 0 auto 10px auto;
 
+    @include no-select;
     opacity: 0.3;
     &.active {
         opacity: 1.0;
+    }
+
+    div.step {
+        position: absolute;
+        left: -45px;
+        font-weight: bold;
+        font-size: 40px;
     }
 
     span.number {
@@ -237,10 +246,14 @@ div.input-container {
         height: 37px;
     }
     div.button {
+        float: right;        
+    }
+}
+
+    div.button {
         text-align: center;
         cursor: pointer;
-        float: right;
-        // border: 1px solid $light-gray;
+        border: 1px solid $light-gray;
         width: 100px;
         padding: 5px 10px;
 
@@ -257,7 +270,6 @@ div.input-container {
         //     color: white;
         // }
     }
-}
 
 div.network {
     min-width: 600px;
@@ -270,7 +282,24 @@ div.network {
     }
     div.logo {
         position: absolute;
-        bottom: 5px;
+        bottom: 60px;
         right: 5px;
     }
-}        
+
+    div.button {
+        margin: 20px auto 10px auto;
+    }
+}  
+
+div.export {
+    div.label {
+        margin: 0 auto;
+        text-align: center;
+    }
+    input {
+        display: block;
+        margin: 0 auto;
+        width: 490px;
+        height: 37px;
+    }
+}      

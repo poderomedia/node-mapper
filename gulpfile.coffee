@@ -2,6 +2,7 @@ gulp = require 'gulp'
 gutil = require 'gulp-util'
 
 browserSync = require 'browser-sync'
+browserify = require 'gulp-browserify'
 sass = require 'gulp-sass'
 rename = require 'gulp-rename'
 coffeelint = require 'gulp-coffeelint'
@@ -45,11 +46,14 @@ gulp.task('browser-sync', ->
 
 # Compile and concatenate scripts
 gulp.task('coffee', ->
-  gulp.src(sources.coffee)
-    .pipe(coffee(bare: true)
-    .on('error', gutil.log))
-    .pipe(concat('app.js'))
-    .pipe(if isProd then uglify() else gutil.noop())
+  gulp.src('app/scripts/main.coffee', read: false)  
+    .pipe(browserify(
+      transform: ['coffeeify']
+      extensions: ['.coffee']
+      insertGlobals: true,
+      debug: !isProd
+      ))
+    .pipe(rename('app.js'))
     .pipe(gulp.dest(destinations.js))
     .pipe(browserSync.reload(stream: true))
 )

@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, request, make_response, json, send_file
 from flask.ext.restful import Resource, Api, reqparse
 from bson.objectid import ObjectId
+import json
 
 from db import MongoInstance as MI
 
@@ -49,6 +50,8 @@ def set_allow_origin(resp):
         h['Access-Control-Allow-Origin'] = request.headers['Origin']
     return resp
 
+dataGetParser = reqparse.RequestParser()
+dataGetParser.add_argument('key', type=str, required=True)
 
 dataPostParser = reqparse.RequestParser()
 dataPostParser.add_argument('key', type=str, required=True)
@@ -56,14 +59,19 @@ dataPostParser.add_argument('data', type=str, required=True)
 dataPostParser.add_argument('nodes', type=str, required=True)
 dataPostParser.add_argument('connections', type=str, required=True)
 class Data(Resource):
-	def post(self):
-		args = dataPostParser.parse_args()
-		key = args.get('key')
-		data = args.get('data')
-		nodes = args.get('nodes')
-		connections = args.get('connections')
+    def get(self):
+        args = dataGetParser.parse_args()
+        key = args.get('key')
+        return MI.getData(key)
 
-		return MI.postData(key, data, nodes, connections)
+    def post(self):
+        args = dataPostParser.parse_args()
+        key = args.get('key')
+        data = args.get('data')
+        nodes = args.get('nodes')
+        connections = args.get('connections')
+
+        return MI.postData(key, data, nodes, connections)
 api.add_resource(Data, '/api/data')
 
 

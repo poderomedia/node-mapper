@@ -11,8 +11,13 @@ angular.module('app', [ 'app.routes', 'app.services' ])
     .constant('API_URL', 'http://localhost:9000')
 
 
-angular.module('app').controller('embedCtrl', ($scope, $stateParams) ->
-    console.log("key", $stateParams.key)    
+angular.module('app').controller('embedCtrl', ($scope, $stateParams, DataService) ->
+    $scope.key = $stateParams.key
+    $scope.config = {}
+    params = {}
+    DataService.promise($scope.key, 'get', params, (result) ->
+        console.log("DataService result", result)
+    )
 )
 
 
@@ -44,7 +49,12 @@ angular.module('app').controller('projectCtrl', ($scope, $location, DataService)
 
                 $scope.$apply()
 
-                DataService.promise(key, $scope.data.Data, $scope.data.Nodes, $scope.data.Connections, (result) ->
+                params = 
+                    data: $scope.data.Data
+                    nodes: $scope.data.Nodes
+                    connections: $scope.data.Connections
+
+                DataService.promise(key, 'post', params, (result) ->
                     console.log("DataService result", result)
                 )
         )

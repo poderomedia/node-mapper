@@ -10,6 +10,15 @@ def formatObjectIDs(collectionName, results):
 
 class mongoInstance(object):
 
+    def getData(self, key):
+        result = MongoInstance.client['NodeMapper'].data.find_one({'key': key}) 
+
+        data = result['data']
+        nodes = result['nodes']
+        connections = result['connections']
+
+        return { 'data': data, 'nodes': nodes, 'connections': connections }
+
     def postData(self, key, data, nodes, connections):
     	doc = {
         	'data': data,

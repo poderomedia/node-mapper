@@ -10,6 +10,18 @@ def formatObjectIDs(collectionName, results):
 
 class mongoInstance(object):
 
+    def getConfig(self, key):
+        result = MongoInstance.client['NodeMapper'].config.find_one({'key': key}) 
+        config = result['config']
+        return { 'Config': config }
+
+    def postConfig(self, key, config):
+        doc = {
+            'config': config
+        }
+        print MongoInstance.client['NodeMapper'].config.find_and_modify({'key': key}, {'$set': doc}, upsert=True, new=True)
+        return { 'result': 'inserted' }
+
     def getData(self, key):
         result = MongoInstance.client['NodeMapper'].data.find_one({'key': key}) 
 
@@ -17,7 +29,7 @@ class mongoInstance(object):
         nodes = result['nodes']
         connections = result['connections']
 
-        return { 'data': data, 'nodes': nodes, 'connections': connections }
+        return { 'Data': data, 'Nodes': nodes, 'Connections': connections }
 
     def postData(self, key, data, nodes, connections):
     	doc = {

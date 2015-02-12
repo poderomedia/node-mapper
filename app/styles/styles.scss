@@ -128,7 +128,7 @@ header {
     text-align: center;
     background-color: #1b2032;
     color: white;
-    z-index: 10;
+    z-index: 10000;
 }
 
 .section {
@@ -302,4 +302,18 @@ div.export {
         width: 490px;
         height: 37px;
     }
-}      
+}   
+
+div.embed {
+    width: 100%;
+    height: 100%;
+    div#viz {
+        width: 100%;
+        height: 500px;
+    }
+    div.logo {
+        position: absolute;
+        bottom: 60px;
+        right: 5px;
+    }
+}   

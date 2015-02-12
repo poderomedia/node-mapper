@@ -3,34 +3,43 @@ d3 = require('d3')
 d3plus = require('d3plus')
 tabletop = require('tabletop')
 
+
 # Top-level
 require('./routes')
 require('./data_services')
 
+
 angular.module('app', [ 'app.routes', 'app.services' ])
-    .constant('API_URL', 'http://localhost:9000')
+    .constant('API_URL', 'http://localhost:9000/api/')
 
 
-angular.module('app').controller('embedCtrl', ($scope, $stateParams, DataService) ->
+angular.module('app').controller('embedCtrl', ($scope, $stateParams, DataService, ConfigService) ->
     $scope.key = $stateParams.key
     $scope.config = {}
     params = {}
     DataService.promise($scope.key, 'get', params, (result) ->
-        console.log("DataService result", result)
+        $scope.data = result
+    )
+
+    ConfigService.promise($scope.key, 'get', params, (result) ->
+        $scope.config = result.Config
     )
 )
 
 
 
-angular.module('app').controller('projectCtrl', ($scope, $location, DataService) ->
+angular.module('app').controller('projectCtrl', ($scope, $location, DataService, ConfigService) ->
     # $scope.url = 'https://docs.google.com/spreadsheets/d/13VWRA1Vjcn9bu55SCBIFCUoC0kXhlhNrclK67O7ItcM/pubhtml'
     # $scope.url = 'https://docs.google.com/spreadsheets/d/1ozfvHPGlDLIE2idxnj2iDg2H_ZLJYxtgwSgjCKGfnUw/pubhtml'
     $scope.url = 'https://docs.google.com/spreadsheets/d/1nNgKW8EZ98SKOTMEj9wujsJIJfmlRuFUowwRtSbduuQ/pubhtml'
-    $scope.key = ''
+    $scope.key = 'test'
 
     getSpreadsheetData = (key) ->
         $scope.loading = true
         console.log("Key:", key)
+        $scope.embedURL = $location.absUrl().split('//')[1].split('/')[0] + '/#' + '/embed/' + key # $state.href('embed', {pID: $rootScope.pID, sID: sID})
+        $scope.embedHTML = '<iframe width="560" height="315" src="' + $scope.embedURL + '" frameborder="0" allowfullscreen></iframe>'
+
         Tabletop.init(
             key: key
             callback: (data, tabletop) ->
@@ -65,6 +74,19 @@ angular.module('app').controller('projectCtrl', ($scope, $location, DataService)
         $scope.key = key
         getSpreadsheetData(key)
 
+    $scope.saving = false
+    $scope.saveConfig = ->
+        console.log("saveConfig(), config:", $scope.config)
+        $scope.saving = true
+        config = $scope.config
+        params =
+            config: config
+
+        ConfigService.promise($scope.key, 'post', params, (result) ->
+            $scope.saving = false
+            console.log("ConfigService result", result)
+        )
+
     $scope.fontSizes = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 
     $scope.config = 
@@ -79,12 +101,7 @@ angular.module('app').controller('projectCtrl', ($scope, $location, DataService)
         sFontSize: 12
 
     $scope.stage = 0
-
-    $scope.embedURL = $location.absUrl().split('//')[1].split('/')[0] + '/#' + '/embed/' + $scope.key # $state.href('embed', {pID: $rootScope.pID, sID: sID})
-    $scope.embedHTML = '<iframe width="560" height="315" src="' + $scope.embedURL + '" frameborder="0" allowfullscreen></iframe>'
 )
-
-
 
 
 angular.module('app').directive("network", ["$window", "$timeout",

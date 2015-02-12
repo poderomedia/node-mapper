@@ -4,7 +4,7 @@
     </div>
 </header>
 <div class="wrapper">        
-    <div ng-controller="projectCtrl">
+    <div>
         <div class="input section" ng-class="{'active': (stage >= 0)}">
             <div class="step">1</div>
             <div class="title">Upload a Google Spreadsheet</div>
@@ -101,7 +101,7 @@
                     </div>
                 </div>
             </network>
-            <div class="button" ng-click="getData(url)">
+            <div class="button" ng-click="saveConfig()">
                 <div class="text" ng-if="!saving">
                     Save
                 </div>

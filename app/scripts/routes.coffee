@@ -6,6 +6,7 @@ angular.module('app.routes', ['ui.router']).config(($stateProvider, $urlRouterPr
   $stateProvider
     .state('landing',
       url: '/'
+      controller: 'projectCtrl'
       templateUrl: 'templates/landing.html'
     )
     .state('embed',

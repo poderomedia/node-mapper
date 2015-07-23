@@ -20,7 +20,7 @@ NodeMapper is a easy network visualization builder using data from a Google Spre
 The goal of NodeMapper is to expand and democratize the use of data to do network visualizations for storytelling by people and organizations that don`t have access to programmers, opening new possibilities for anyone interested in creating and publishing visualizations of connections, in a fast and simple way. For more information on the project and how to contribute, please see Roadmap, features and user research.
 NodeMapper is a free open source software [free open source software]( vvvvvv) by Poderomedia, developed by Kevin Hu, Manuel Aristarán and Miguel Paz. You can fork it and deploy it with your own modifications. Please see the [License](URL URL) file for details.  
 
-Assumptions 
+Assumptions
 -----------
 
 What is the tool for and what is NOT for (some end user assumptions):

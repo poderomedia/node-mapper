@@ -1,15 +1,3 @@
-$$\   $$\                 $$\                                                                           
-$$$\  $$ |                $$ |                                                                          
-$$$$\ $$ | $$$$$$\   $$$$$$$ | $$$$$$\  $$$$$$\$$$$\   $$$$$$\   $$$$$$\   $$$$$$\   $$$$$$\   $$$$$$\  
-$$ $$\$$ |$$  __$$\ $$  __$$ |$$  __$$\ $$  _$$  _$$\  \____$$\ $$  __$$\ $$  __$$\ $$  __$$\ $$  __$$\ 
-$$ \$$$$ |$$ /  $$ |$$ /  $$ |$$$$$$$$ |$$ / $$ / $$ | $$$$$$$ |$$ /  $$ |$$ /  $$ |$$$$$$$$ |$$ |  \__|
-$$ |\$$$ |$$ |  $$ |$$ |  $$ |$$   ____|$$ | $$ | $$ |$$  __$$ |$$ |  $$ |$$ |  $$ |$$   ____|$$ |      
-$$ | \$$ |\$$$$$$  |\$$$$$$$ |\$$$$$$$\ $$ | $$ | $$ |\$$$$$$$ |$$$$$$$  |$$$$$$$  |\$$$$$$$\ $$ |      
-\__|  \__| \______/  \_______| \_______|\__| \__| \__| \_______|$$  ____/ $$  ____/  \_______|\__|      
-                                                                $$ |      $$ |                          
-                                                                $$ |      $$ |                          
-                                                                \__|      \__|                          
-
 Node Mapper
 ===========
 A easy to use tool that allows you to build simple visualizations of networks to publish or embed them in your website, without coding, in just a few minutes. NodeMapper is currently in early proof of concept version. In order to improve it and make it useful, we are looking for journalists, designers, developers, academics, civic advocates, newsrooms and organizations interested in testing NodeMapper with real data. If you want to join the alpha tester group, [add your contact info here](https://docs.google.com/a/poderopedia.com/forms/d/1MEuCVvYZUcj2Isxq1IVVLg1oX_LD0F6vistF_s48HrQ/viewform).

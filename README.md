@@ -28,7 +28,7 @@ This tool has some end user assumptions:
 * You want to publish a network visualization, not analyze it.
 * You have a story to tell and including a network visualization can give your story more depth and visual context.
 * It`s designed for small network graphs (20 to 30 nodes average, around 100 nodes max. for clarity), not for big hairballs
-It should help people show and tell relevant relations giving nodes and edges (entities and connections) weight and as much context as possible. Not give 2 very different relations the same weight. For example: conspiracy theorist believe that if you are member of the board of X, then you are part of a global secret ruling group lead by Y :). Providing good examples and guidelines can help with user behaviour.
+* It should help people show and tell relevant relations giving nodes and edges (entities and connections) weight and as much context as possible. Not give 2 very different relations the same weight. For example: conspiracy theorist believe that if you are member of the board of X, then you are part of a global secret ruling group lead by Y. Providing good examples and guidelines can help with user behaviour.
 * It should help people become “network visualization” savvy to learn the basic concepts to grow from then to more complex projects.
 
 How can you use it?

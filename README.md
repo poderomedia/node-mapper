@@ -59,7 +59,7 @@ Build Process
 How to contribute
 --------------------
 
-Want to help us make NodeMapper awesome? Great! Please open and [issue]( URL URL URL) for code, feature ideas, bugs, etc. 
+Want to help us make NodeMapper awesome? Great! Please open and [issue](https://github.com/poderomedia/node-mapper/issues) for code, feature ideas, bugs, etc. 
 
 Credits
 --------------------

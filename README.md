@@ -6,7 +6,7 @@ Index
 ========================
 
 * [What is this?](#what-is-this)
-* [Assumptions](#assumptions)
+* [What is it for and what it is not for](#what-is-it-for-and-what-it-is-not-for)
 * [How can you use it?](#how-can-you-use-it)
 * [How to run NodeMapper](#how-to-run-nodemapper)
 * [How to contribute](#how-to-contribute)
@@ -20,10 +20,10 @@ NodeMapper is a easy network visualization builder using data from a Google Spre
 The goal of NodeMapper is to expand and democratize the use of data to do network visualizations for storytelling by people and organizations that don`t have access to programmers, opening new possibilities for anyone interested in creating and publishing visualizations of connections, in a fast and simple way. For more information on the project and how to contribute, please see Roadmap, features and user research.
 NodeMapper is a free open source software [free open source software](https://github.com/poderomedia/node-mapper/blob/master/LICENSE) by Poderomedia, developed by Kevin Hu, Manuel Aristarán and Miguel Paz. You can fork it and deploy it with your own modifications. Please see the [License](https://github.com/poderomedia/node-mapper/blob/master/LICENSE) file for details.  
 
-Assumptions
+What is it for and what it is not for
 -----------
 
-What is the tool for and what is NOT for (some end user assumptions):
+This tool has some end user assumptions:
 * You know what you want to show as a network visualization.
 * You want to publish a network visualization, not analyze it.
 * You have a story to tell and including a network visualization can give your story more depth and visual context.
@@ -34,18 +34,14 @@ It should help people show and tell relevant relations giving nodes and edges (e
 How can you use it?
 ---------------
 
-* Open the [Spreadsheet template](https://docs.google.com/spreadsheets/d/1ozfvHPGlDLIE2idxnj2iDg2H_ZLJYxtgwSgjCKGfnUw/pubhtml(. This template has 3 pages: 
-insert image here
-1. Data page: in the first column you add and ID (1, 2, 3 or A, B, C... etc.), the second column you add the Name of the entity (person, place, organization, animal, etc.) and in the third column you add the type of entity (can be a very strict description, such as: person, company, institution... or very flexible description: offshore company, proxy, drug lord, unicorn, Scientology rind leader, etc). 
-In this example template we just use Names of People and Organizations and Person, Company and Institution for type of entity as you can see here: 
-2. Nodes: PENDING
-3. Connections: PENDING
-* Add data into a spreadsheet template
-* You publish the spreadsheet
-* You paste the url it in the url field 
-* You load data, choose settings, save the network visualization
-* Copy the url of the network visualization or copy the embed code
-* Paste the embed code in your website or share the url with others
+* Open the [Spreadsheet template](https://docs.google.com/spreadsheets/d/1ozfvHPGlDLIE2idxnj2iDg2H_ZLJYxtgwSgjCKGfnUw/pubhtml). 
+* Add data into the spreadsheet template. You can follow this tutorial. PENDING
+* Publish the spreadsheet to the web
+* Copy the url of published spreadsheet
+* Pase the url it in the url field of PENDING
+* Click on load data, choose settings, preview and save the network visualization
+* Copy the url of the network visualization to share it with others or 
+* Copy the embed code and paste it in your website
 
 How to run Node Mapper
 --------------------

@@ -64,8 +64,8 @@ Want to help us make NodeMapper awesome? Great! Please open and [issue]( URL URL
 Credits
 --------------------
 
-Kevin Hu
-Manuel Aristarán
-Miguel Paz
+[Kevin Hu](http://kevinzenghu.com)
+[Manuel Aristarán](http://jazzido.com)
+[Miguel Paz](http://twitter.com/miguelpaz)
 Poderomedia would like to give a special thank you to Kevin and Manuel for contributing their time and enthusiasm to develop the first proof of concept of NodeMapper. 
 Acknowledgments go as well for their help and feedback to César Hidalgo (director of the MacroConnections Group at MIT MediaLab), Ethan Zuckerman (director of the Civic Media Group at MIT MediaLab), the 2015 Nieman fellows and the Berkman Center for Internet and Society fellows of 2015.

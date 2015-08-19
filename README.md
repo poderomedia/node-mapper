@@ -34,8 +34,8 @@ It should help people show and tell relevant relations giving nodes and edges (e
 How can you use it?
 ---------------
 
-* Open the Spreadsheet template https://docs.google.com/spreadsheets/d/1e5pk9DpQBtQayUcSpSAujUyKpJOwwGgWUps5nE95ZHU/edit#gid=695733526. This template has 3 pages: 
-inser image here
+* Open the [Spreadsheet template](https://docs.google.com/spreadsheets/d/1ozfvHPGlDLIE2idxnj2iDg2H_ZLJYxtgwSgjCKGfnUw/pubhtml(. This template has 3 pages: 
+insert image here
 1. Data page: in the first column you add and ID (1, 2, 3 or A, B, C... etc.), the second column you add the Name of the entity (person, place, organization, animal, etc.) and in the third column you add the type of entity (can be a very strict description, such as: person, company, institution... or very flexible description: offshore company, proxy, drug lord, unicorn, Scientology rind leader, etc). 
 In this example template we just use Names of People and Organizations and Person, Company and Institution for type of entity as you can see here: 
 2. Nodes: PENDING

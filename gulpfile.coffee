@@ -1,7 +1,6 @@
 gulp = require 'gulp'
 gutil = require 'gulp-util'
 
-browserSync = require 'browser-sync'
 browserify = require 'gulp-browserify'
 sass = require 'gulp-sass'
 rename = require 'gulp-rename'
@@ -21,32 +20,31 @@ sources =
   html: 'app/**/*.html'
   sass: 'app/styles/styles.scss'
   coffee: 'app/scripts/*.coffee'
-  assets: 'app/assets/**/*'
-  libjs: 'app/scripts/lib/*.js'
-  libcss: 'app/styles/lib/*.css'
-  data: 'app/data/**/*'
+  lib: 'app/scripts/lib/*.js'
 
 destinations =
-  css: 'dist/'
   html: 'dist/'
+  css: 'dist/'
   js: 'dist/'
-  assets: 'dist/assets'
-  libjs: 'dist/lib/'
-  libcss: 'dist/lib'
-  data: 'dist/data/'
+  lib: 'dist/lib/'
 
-# TASKS -------------------------------------------------------------
+# Modules for webserver and livereload
+express = require('express')
+refresh = require('gulp-livereload')
+liveReload = require('connect-livereload')
+liveReloadPort = 35739
+serverPort = 8000
 
-gulp.task('browser-sync', ->
-  browserSync(
-    server:
-      baseDir: 'dist/'
-  )
-)
+server = express()
+server.use liveReload(port: liveReloadPort)  # Add live reload
+server.use express.static('dist') # Use our 'dist' folder as rootfolder
+server.all '/*', (req, res) ->  # Because I like HTML5 pushstate .. this redirects everything back to our index.html
+  res.sendFile 'index.html', root: 'dist'
+  return
 
 # Compile and concatenate scripts
 gulp.task('coffee', ->
-  gulp.src('app/scripts/main.coffee', read: false)  
+  gulp.src('app/scripts/main.coffee', read: false)
     .pipe(browserify(
       transform: ['coffeeify']
       extensions: ['.coffee']
@@ -55,7 +53,6 @@ gulp.task('coffee', ->
       ))
     .pipe(rename('app.js'))
     .pipe(gulp.dest(destinations.js))
-    .pipe(browserSync.reload(stream: true))
 )
 
 # Compile stylesheets
@@ -64,46 +61,42 @@ gulp.task('sass', ->
     .pipe(sass(onError: (e) -> console.log(e)))
     .pipe(autoprefixer('last 2 versions', '> 1%', 'ie 8'))
     .pipe(gulp.dest(destinations.css))
-    .pipe(browserSync.reload(stream: true))
 )
 
 # Lint coffeescript
 # TODO Fix this
 gulp.task('lint', ->
-  gulp.src(sources.coffee)
-  .pipe(coffeelint())
-  .pipe(coffeelint.reporter())
-)
-
-gulp.task('data', ->
-  gulp.src(sources.data).pipe(gulp.dest(destinations.data))
+  # gulp.src(sources.coffee)
+  # .pipe(coffeelint())
+  # .pipe(coffeelint.reporter())
 )
 
 gulp.task('html', ->
   gulp.src(sources.html).pipe(gulp.dest(destinations.html))
 )
 
-gulp.task('assets', ->
-  gulp.src(sources.assets).pipe(gulp.dest(destinations.assets))
+gulp.task('lib', ->
+  gulp.src(sources.lib).pipe(gulp.dest(destinations.lib))
 )
 
-gulp.task('libjs', ->
-  gulp.src(sources.libjs).pipe(gulp.dest(destinations.libjs))
+gulp.task('server', ->
+  gutil.log 'Express Server Running on Port:', gutil.colors.cyan(serverPort)
+  gutil.log 'LiveReload Server Running on Port:', gutil.colors.cyan(liveReloadPort)
+  server.listen(serverPort)
+  refresh.listen(liveReloadPort)
+  return
 )
 
-gulp.task('libcss', ->
-  gulp.src(sources.libcss).pipe(gulp.dest(destinations.libcss))
-)
+changedFile = (file) -> refresh.changed file.path
 
 # Watched tasks
 gulp.task('watch', ->
-  gulp.watch sources.data, ['data']
-  gulp.watch 'app/styles/*.scss', ['sass']
-  gulp.watch sources.assets, ['assets']
-  gulp.watch sources.html, ['html']
-  gulp.watch sources.coffee, ['coffee', 'lint']
-  gulp.watch sources.libjs, ['libjs']
- )
+  gulp.watch(sources.lib, ['lib']).on('change', changedFile)
+  gulp.watch(sources.sass, ['sass']).on('change', changedFile)
+  gulp.watch(sources.html, ['html']).on('change', changedFile)
+  gulp.watch(sources.coffee, ['coffee', 'lint']).on('change', changedFile)
+  return
+)
 
 # Remove /dist directory
 gulp.task('clean', ->
@@ -113,11 +106,11 @@ gulp.task('clean', ->
 
 # Build sequence
 gulp.task('build', ->
-  runSequence('clean', ['coffee', 'sass', 'data', 'html', 'libjs', 'assets'])
+  runSequence('clean', ['coffee', 'lint', 'sass', 'html', 'lib'])
 )
 
 gulp.task('default', [
-  'browser-sync'
   'build'
+  'server'
   'watch'
 ])

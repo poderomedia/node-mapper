@@ -1,7 +1,6 @@
 $light-gray: #e0e5e9;
 $dark-gray: #555555;
 
-// Universal List Styling
 ul {
     margin: 0;
     padding: 0;
@@ -195,16 +194,16 @@ header {
 @keyframes spinner {
     to {transform: rotate(360deg);}
 }
- 
+
 @-webkit-keyframes spinner {
     to {-webkit-transform: rotate(360deg);}
 }
- 
+
 .spinner {
     min-width: 24px;
     min-height: 24px;
 }
- 
+
 .spinner:before {
     content: 'Loading…';
     position: absolute;
@@ -215,7 +214,7 @@ header {
     margin-top: 4px;
     margin-left: -7px;
 }
- 
+
 .spinner:not(:required):before {
     content: '';
     border-radius: 50%;
@@ -246,7 +245,7 @@ div.input-container {
         height: 37px;
     }
     div.button {
-        float: right;        
+        float: right;
     }
 }
 
@@ -289,7 +288,7 @@ div.network {
     div.button {
         margin: 20px auto 10px auto;
     }
-}  
+}
 
 div.export {
     div.label {
@@ -302,7 +301,7 @@ div.export {
         width: 490px;
         height: 37px;
     }
-}   
+}
 
 div.embed {
     width: 100%;
@@ -316,4 +315,4 @@ div.embed {
         bottom: 60px;
         right: 5px;
     }
-}   
+}

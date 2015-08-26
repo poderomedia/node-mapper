@@ -14,4 +14,7 @@ angular.module('app.routes', ['ui.router']).config(($stateProvider, $urlRouterPr
       controller: 'embedCtrl'
       templateUrl: 'templates/embed.html'
     )
+
+  $urlRouterProvider.otherwise('/')
+  $locationProvider.html5Mode(true)
 )

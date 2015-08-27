@@ -77,7 +77,6 @@ dataGetParser.add_argument('key', type=str, required=True)
 
 dataPostParser = reqparse.RequestParser()
 dataPostParser.add_argument('key', type=str, required=True)
-dataPostParser.add_argument('data', type=str, required=True)
 dataPostParser.add_argument('nodes', type=str, required=True)
 dataPostParser.add_argument('connections', type=str, required=True)
 class Data(Resource):
@@ -90,13 +89,10 @@ class Data(Resource):
         args = dataPostParser.parse_args()
 
         key = args.get('key')
-        print args.get('data')
-        print json.loads(args.get('data'))
-        data = json.loads(args.get('data'))
         nodes = json.loads(args.get('nodes'))
         connections = json.loads(args.get('connections'))
 
-        return MI.postData(key, data, nodes, connections)
+        return MI.postData(key, nodes, connections)
 api.add_resource(Data, '/api/data')
 
 

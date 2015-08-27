@@ -33,17 +33,11 @@ angular.module('app.services').service("DataService", ($http, API_URL) ->
             ).success( (data) -> callback(data) )
 
         else if method is 'post'
-            data = params.data
             nodes = params.nodes
             connections = params.connections
-            console.log(data, nodes, connections)
 
             $http.post(ENDPOINT,
                 key: key
-                data: JSON.stringify(
-                    column_names: data.column_names
-                    elements: data.elements
-                    )
                 nodes: JSON.stringify(
                     column_names: nodes.column_names
                     elements: nodes.elements
@@ -53,5 +47,4 @@ angular.module('app.services').service("DataService", ($http, API_URL) ->
                     elements: connections.elements
                     )
             ).success( (data) -> callback(data) )
-
 )

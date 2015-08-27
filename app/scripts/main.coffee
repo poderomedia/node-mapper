@@ -62,8 +62,9 @@ angular.module('app').controller('projectCtrl', ($scope, $location, DataService,
                     nodes: nodes
                     connections: connections
 
-                # Getting rid of this functionality for now
-                # DataService.promise(key, 'post', params, (result) -> )
+                DataService.promise(key, 'post', params, (result) ->
+                  console.log("Saved data")
+                )
         )
 
     $scope.getData = (url) ->
